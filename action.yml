@@ -10,10 +10,13 @@ inputs:
 outputs:
   s3-path:
     description: "The S3 path where the repository has been uploaded to."
-    value: ${{ steps.run-script.outputs.s3-path }}
+    value: ${{ steps.set-output.outputs.s3-path }}
 runs:
   using: "composite"
   steps:
     - id: run-script
-      run: echo "::set-output name=s3-path::$(${{ github.action_path }}/run.sh)"
+      run: ${{ github.action_path }}/run.sh
+      shell: bash
+    - id: set-output
+      run: echo "::set-output name=s3-path::$(cat output)"
       shell: bash
