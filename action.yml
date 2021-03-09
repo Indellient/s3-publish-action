@@ -14,8 +14,10 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - run: "echo arguments: ${{ inputs.folder-name }} ${{ inputs.bucket-name }}"
+      shell: bash
     - id: run-script
-      run: ${{ github.action_path }}/run.sh
+      run: ${{ github.action_path }}/run.sh ${{ inputs.folder-name }} ${{ inputs.bucket-name }}
       shell: bash
     - id: set-output
       run: echo "::set-output name=s3-path::$(cat output)"
