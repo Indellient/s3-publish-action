@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ -z "$1" ]] || [[ -z "$2" ]]; then
-  echo "Error: two arguments (object prefix, bucket name) required."
+  echo "Error: two arguments (object prefix, bucket name) required. Got: ${@:1}"
   exit 1
 fi
 
