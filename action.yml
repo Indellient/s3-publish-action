@@ -1,0 +1,19 @@
+name: 's3-publish-action'
+description: 'Publish repository to S3'
+inputs:
+  folder-name:  # id of input
+    description: 'The folder to upload the repository to.'
+    required: true
+  bucket-name:  # id of input
+    description: 'The name of the S3 bucket to upload the repository to.'
+    required: true
+outputs:
+  s3-path:
+    description: "The S3 path where the repository has been uploaded to."
+    value: ${{ steps.run-script.outputs.s3-path }}
+runs:
+  using: "composite"
+  steps:
+    - id: run-script
+      run: echo "::set-output name=s3-path::$(${{ github.action_path }}/run.sh)"
+      shell: bash
