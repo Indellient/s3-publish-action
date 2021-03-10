@@ -7,8 +7,8 @@ inputs:
   bucket-name:  # id of input
     description: 'The name of the S3 bucket to upload the repository to.'
     required: true
-  empty-folder:  # id of input
-    description: 'Whether or not to empty the folder being published to prior to publishing. Must be one of "true", "false".'
+  clear-folder:  # id of input
+    description: 'Whether or not to clear the folder being published to prior to publishing. Must be one of "true", "false".'
     required: true
   exclusions:
     description: 'A comma separated list of glob patterns to exclude when uploading to S3.'
@@ -22,7 +22,7 @@ runs:
   using: "composite"
   steps:
     - id: run-script
-      run: ${{ github.action_path }}/run.sh ${{ inputs.folder-name }} ${{ inputs.bucket-name }} ${{ inputs.empty-folder }} "${{ inputs.exclusions }}"
+      run: ${{ github.action_path }}/run.sh ${{ inputs.folder-name }} ${{ inputs.bucket-name }} ${{ inputs.clear-folder }} ${{ inputs.exclusions }}
       shell: bash
     - id: set-output
       run: echo "::set-output name=s3-path::$(cat output)"
