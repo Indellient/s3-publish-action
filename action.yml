@@ -10,6 +10,10 @@ inputs:
   empty-folder:  # id of input
     description: 'Whether or not to empty the folder being published to prior to publishing. Must be one of "true", "false".'
     required: true
+  exclusions:
+    description: 'A comma separated list of glob patterns to exclude when uploading to S3.'
+    required: false
+    default: ".gitignore,.git/*"
 outputs:
   s3-path:
     description: "The S3 path where the repository has been uploaded to."
@@ -18,7 +22,7 @@ runs:
   using: "composite"
   steps:
     - id: run-script
-      run: ${{ github.action_path }}/run.sh ${{ inputs.folder-name }} ${{ inputs.bucket-name }} ${{ inputs.empty-folder }}
+      run: ${{ github.action_path }}/run.sh ${{ inputs.folder-name }} ${{ inputs.bucket-name }} ${{ inputs.empty-folder }} "${{ inputs.exclusions }}"
       shell: bash
     - id: set-output
       run: echo "::set-output name=s3-path::$(cat output)"
