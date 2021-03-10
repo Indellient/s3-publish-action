@@ -7,6 +7,9 @@ inputs:
   bucket-name:  # id of input
     description: 'The name of the S3 bucket to upload the repository to.'
     required: true
+  empty-folder:  # id of input
+    description: 'Whether or not to empty the folder being published to prior to publishing. Must be one of "true", "false".'
+    required: true
 outputs:
   s3-path:
     description: "The S3 path where the repository has been uploaded to."
@@ -15,7 +18,7 @@ runs:
   using: "composite"
   steps:
     - id: run-script
-      run: ${{ github.action_path }}/run.sh ${{ inputs.folder-name }} ${{ inputs.bucket-name }}
+      run: ${{ github.action_path }}/run.sh ${{ inputs.folder-name }} ${{ inputs.bucket-name }} ${{ inputs.empty-folder }}
       shell: bash
     - id: set-output
       run: echo "::set-output name=s3-path::$(cat output)"
